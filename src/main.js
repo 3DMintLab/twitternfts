@@ -65,6 +65,9 @@ async function getComponent() {
     ***REMOVED***;
         console.log('this is mint.js');
     }
+    if (curent === "/confirmation.html") {
+        const { default: app } = await import('./js/mint/confirmation.mjs');
+    }
     const element = document.createElement('script');
     return element;
 }

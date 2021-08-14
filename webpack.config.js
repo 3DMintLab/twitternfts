@@ -93,7 +93,6 @@ export default {
       jQuery: "jquery"
 ***REMOVED***,
     new webpack.EnvironmentPlugin({
-      NODE_ENV: 'development',
       API: 'http://localhost:80',    
 ***REMOVED***
   ])

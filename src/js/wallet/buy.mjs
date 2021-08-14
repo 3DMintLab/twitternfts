@@ -20,7 +20,7 @@ try {
 }
 
 export async function getProtocolParameters() {
-  var HOST = process.env.API || location.origin;
+  var HOST = process.env.NODE_ENV === 'development' ? process.env.API : location.origin;
   const latest_block = await fetch(HOST+'/blocks_latest', {
       headers: {
         'Accept': 'application/json',

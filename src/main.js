@@ -13,6 +13,7 @@ logMessage(window.location.pathname);
 
 async function getComponent() {
     if (curent === "/" || curent === "/index.html") {
+        var apiurl = process.env.NODE_ENV === 'development' ? process.env.API : location.origin;
         const { upload, post_regex } = await import('./js/mint/app.mjs');
         const { MintTx } = await import('./js/mint/mint.mjs');
         const { getSpinner } = await import('./js/spinner.mjs');

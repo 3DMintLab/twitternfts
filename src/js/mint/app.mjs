@@ -32,7 +32,7 @@ export async function upload() {
     var img = getCanvas.toDataURL();
     // Convert Base64 image to binary
     var file =  dataURItoBlob(img);
-    var HOST = process.env.API || location.origin;
+    var HOST = process.env.NODE_ENV === 'development' ? process.env.API : location.origin;
     const url = HOST + "/upload";
     try {
         if (!file) {
@@ -102,7 +102,7 @@ export async function upload() {
     }
 
     async function loadTwit(url) {
-        var HOST = process.env.API || location.origin;
+***REMOVED***
         const payload = await fetch(HOST+'/oembed?url='+url, {
             headers: {
                 'Accept': 'application/json',

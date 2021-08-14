@@ -6,9 +6,9 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rm -rf dist && webpack --mode development",
+    "build": "rm -rf dist && webpack --mode production",
     "start": "node ./src/server/server.js",
-    "dev": "webpack serve --open",
+    "dev": "webpack serve --open --mode development",
     "watch": "webpack --watch"
   },
   "keywords": [],

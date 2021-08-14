@@ -7,7 +7,7 @@ const Loader = {
 import CoinSelection from "../wallet/coinSelection.mjs";
 
 export async function getProtocolParameters() {
-  var HOST = process.env.API ? process.env.API : location.origin;
+  var HOST = process.env.API || location.origin;
   const latest_block = await fetch(HOST+'/blocks_latest', {
       headers: {
         'Accept': 'application/json',

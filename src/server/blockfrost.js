@@ -45,7 +45,7 @@ export const upload = (request, response) => {
 export const blocks_latest = (request, response) => {
   axios.get(process.env.BLOCKFROST+'/api/v0/blocks/latest', { headers: {
     'Content-Type': 'application/json',
-    'project_id':  process.env.TESTNET
+    'project_id':  process.env.BLOCKFROST_KEY
   }}).then(function (res) {
     response.status(200).send(res.data);
   }).catch(function (error) {
@@ -57,7 +57,7 @@ export const blocks_latest = (request, response) => {
 export const parameters = (request, response) => {
   axios.get(process.env.BLOCKFROST+'/api/v0/epochs/latest/parameters', { headers: {
     'Content-Type': 'application/json',
-    'project_id': process.env.TESTNET
+    'project_id': process.env.BLOCKFROST_KEY
   }}).then(function (res) {
     response.status(200).send(res.data);
   }).catch(function (error) {

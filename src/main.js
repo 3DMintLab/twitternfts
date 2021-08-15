@@ -17,6 +17,8 @@ async function getComponent() {
         const { upload, post_regex } = await import('./js/mint/app.mjs');
         const { MintTx } = await import('./js/mint/mint.mjs');
         const { getSpinner } = await import('./js/spinner.mjs');
+        const S = await import('@emurgo/cardano-serialization-lib-browser/cardano_serialization_lib.js');
+        const _Buffer = (await import('buffer/')).Buffer;
         var HOST = location.origin;
         
         let accTknSecret = sessionStorage.getItem('accTknSecret');
@@ -32,14 +34,29 @@ async function getComponent() {
             console.log('redirect')
     ***REMOVED***
         async function activateCardano() {
-            const promise = await cardano.enable()
-            $("#connectBtn").text('Connected');
-            $("#connectBtn").attr('class', 'btn btn-success');
+            if (!$("#connectBtn")) {
+                return;
+            }
+            const addr = await cardano.getChangeAddress();
+            const paymentAddr = S.Address.from_bytes(_Buffer.from(addr, 'hex')).to_bech32();
+            const promise = await cardano.enable();
+            const length = paymentAddr.length;
+            const networkId = await cardano.getNetworkId();
+            if (networkId != 0) {
+                $("#connectBtn").text('Mainnet');
+                $("#connectBtn").attr('class', 'btn btn-danger');
+            } else {
+                $("#connectBtn").text(`${paymentAddr.substring(0, 6)}...${paymentAddr.substring(length-10,length)}`);
+                $("#connectBtn").attr('class', 'btn btn-success');
+            }
         }
+        activateCardano();
         if (typeof cardano != "undefined") {
             activateCardano();
         } else {
             alert('Nami wallet not installed or browser is incompatible.')
+            $("#connectBtn").text('Not Connected');
+            $("#connectBtn").attr('class', 'btn btn-danger');
         }
         
         $("#mintbtn").on('click', async () => {

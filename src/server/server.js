@@ -6,7 +6,7 @@ import env from 'dotenv';
 import bb from 'express-busboy';
 import { upload, blocks_latest, parameters } from './blockfrost.js';
 import axios from 'axios'
-import { authenticate, callback, callback_mockup } from './twitter.js'
+import { authenticate, callback, callback_mockup, tweets, verify } from './twitter.js'
 
 const app = express()
 
@@ -62,6 +62,8 @@ app.get('/oembed', (request, response) => {
 app.get('/token',      authenticate);
 app.get('/callback',      callback);
 app.get('/callback_mockup',      callback_mockup);
+app.get('/tweets',      tweets);
+app.get('/verify',      verify);
 
 const PORT = process.env.PORT || 80
 const server = app.listen(PORT, () => {

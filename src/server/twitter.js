@@ -10,11 +10,15 @@ if (process.env.NODE_ENV !== 'production') {
 const client = new Twitter({
     subdomain: "api", // "api" is the default (change for other subdomains)
     version: "1.1", // version "1.1" is the default (change for other subdomains)
-    consumer_key: "CTgCAios1go5elZ3P3Z6w5XHU", // from Twitter.
-    consumer_secret: "rhrcLbKAbJHXg0qX106oXTBjMQj6gXRnCvROzNRRyvPGvswqG5", // from Twitter.
+    consumer_key: process.env.API_KEY, // from Twitter.
+    consumer_secret: process.env.API_SECRET, // from Twitter.
 });
 
 export const authenticate = (request, response) => {
+    if (process.env.NODE_ENV !== 'production') {
+        response.redirect('/callback_mockup');
+        return;
+    }
     client
     .getRequestToken("https://twitternfts.herokuapp.com/callback")
     .then(res =>
@@ -23,8 +27,6 @@ export const authenticate = (request, response) => {
                 reqTkn: res.oauth_token,
                 reqTknSecret: res.oauth_token_secret
             ***REMOVED***
-            //response.status(200).json({reqTkn: res.oauth_token,
-            ///    reqTknSecret: res.oauth_token_secret});
             response.redirect('https://api.twitter.com/oauth/authenticate?oauth_token='+res.oauth_token);
         }
     )
@@ -58,4 +60,15 @@ export const callback = (request, response) => {
        
   )
   .catch(console.error);
+}
+
+export const callback_mockup = (request, response) => {
+    response.status(200).json(
+        {
+            accTkn:"999999999-RQDZZCVCVXCVXCVXCV",
+            accTknSecret:"XXXXXXXX.....XXXXXXXX",
+            userId:"99999999999",
+            screenName:"CheffWallets"
+        }
+     );
 }

@@ -1,5 +1,6 @@
 import Twitter from 'twitter-lite';
 import env from 'dotenv';
+import axios from 'axios'
 
 
 if (process.env.NODE_ENV !== 'production') {
@@ -63,12 +64,37 @@ export const callback = (request, response) => {
 }
 
 export const callback_mockup = (request, response) => {
-    response.status(200).json(
-        {
-            accTkn:"999999999-RQDZZCVCVXCVXCVXCV",
-            accTknSecret:"XXXXXXXX.....XXXXXXXX",
-            userId:"99999999999",
-            screenName:"CheffWallets"
-        }
-     );
+     var callback = {
+        accTkn:"999999999-RQDZZCVCVXCVXCVXCV",
+        accTknSecret:"XXXXXXXX.....XXXXXXXX",
+        userId:"99999999999",
+        screenName:"CheffWallets"
+    };
+    response.redirect('/callback.html?accTkn='+callback.accTkn+'&accTknSecret=XXXXXXXX.....XXXXXXXX&userId='+callback.userId+'&screenName='+callback.screenName);
+}
+
+export const tweets = (request, response) => {
+    const userid = request.query.userid
+    axios.get(`https://api.twitter.com/2/users/${userid}/tweets`, { headers: {
+        'Content-Type': 'application/json',
+        'Authorization':  'Bearer '+process.env.BEARER
+      }}).then(function (res) {
+        response.status(200).send(res.data);
+  ***REMOVED***.catch(function (error) {
+        var data = error.response.data;
+        response.status(500).send(data);
+***REMOVED***
+}
+
+export const verify = (request, response) => {
+    const tweetid = request.query.tweetid
+    axios.get(`https://api.twitter.com/2/tweets?ids=${tweetid}&tweet.fields=author_id`, { headers: {
+        'Content-Type': 'application/json',
+        'Authorization':  'Bearer '+process.env.BEARER
+      }}).then(function (res) {
+        response.status(200).send(res.data);
+  ***REMOVED***.catch(function (error) {
+        var data = error.response.data;
+        response.status(500).send(data);
+***REMOVED***
 }

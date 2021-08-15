@@ -18,7 +18,19 @@ async function getComponent() {
         const { MintTx } = await import('./js/mint/mint.mjs');
         const { getSpinner } = await import('./js/spinner.mjs');
         var HOST = location.origin;
-
+        
+        let accTknSecret = sessionStorage.getItem('accTknSecret');
+        if (!accTknSecret) {
+            $('#authform').css("display","block");
+            $('#mintform').css("display","none");
+        } else {
+            $('#authform').css("display","none");
+            $('#mintform').css("display","block");
+        }
+        $('#twitter-button').on('click', () => {
+            window.location.href = '/token'
+            console.log('redirect')
+    ***REMOVED***
         async function activateCardano() {
             const promise = await cardano.enable()
             $("#connectBtn").text('Connected');
@@ -34,19 +46,18 @@ async function getComponent() {
             var target = document.getElementById('body');
             var spinner = getSpinner(target);
             const imageHash = await upload();
-            console.log(imageHash);
             try {
                 const twiturl = $("#twiturl").val();
                 const match = twiturl.match(post_regex);
 
                 let metadata = {
-                    name: "TWIT#"+match[1],
+                    name: "Tweet#"+match[1],
                     quantity: "1",
                     metadata: {
                         collection: "Cheff Labs Twitter NFTs",
                         type: "twitter",
                         image: `ipfs://${imageHash.ipfs_hash}`,
-                        url: twiturl
+                        url: twiturl.substr(0,64)
                     }
                 };
                 console.log(metadata);
@@ -63,10 +74,12 @@ async function getComponent() {
               console.log(error)
             }
     ***REMOVED***;
-        console.log('this is mint.js');
     }
     if (curent === "/confirmation.html") {
         const { default: app } = await import('./js/mint/confirmation.mjs');
+    }
+    if (curent === "/callback.html") {
+        const { default: app } = await import('./js/auth/callback.mjs');
     }
     const element = document.createElement('script');
     return element;

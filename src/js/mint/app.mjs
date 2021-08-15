@@ -69,7 +69,7 @@ export async function upload() {
 
     const twiturl = $("#twiturl");
 
-    twiturl.on('change', function(e) {
+    twiturl.on('change', async function(e) {
         const value = e.target.value;
         if (value) {
             const match = value.match(regex);
@@ -78,9 +78,30 @@ export async function upload() {
                 $('#mintbtn').prop('disabled', true);
                 return;
             }
+            console.log(match[1]);
+            if (match[1]) {
+                const payload = await verify(match[1]);
+                let userId = sessionStorage.getItem('userId');
+                if (payload.data && payload.data[0]) {
+                    const tweet_info = payload.data[0];
+                    if (tweet_info.author_id !== userId) {
+                        alert('Sorry, this tweet does not belong to the user and cannot be minted as NFT!');
+                        return;
+                    }
+                } else {
+                    alert('something wrong happened, contact admin please');
+                    return;
+                }
+            } else {
+                alert('tweet code is not present.');
+                return;
+            }
             if (match[0]) {
                 loadTwit(match[0]);
-            }            
+            } else {
+                alert(' impossible to mint this url ');
+                return;
+            }
         } else {
             $('#mintbtn').prop('disabled', true);
         }
@@ -112,6 +133,18 @@ export async function upload() {
     ***REMOVED***.then((response) => response.json());
         document.getElementById('twitter_container').innerHTML = payload.html;
         generatePicture();
+    }
+
+    async function verify(code) {
+***REMOVED***
+        const payload = await fetch(HOST+'/verify?tweetid='+code, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            method: 'GET'
+    ***REMOVED***.then((response) => response.json());
+        return payload;
     }
 
     $("#btn-Convert-Html2Image").on('click', function () {

@@ -42,8 +42,8 @@ async function getComponent() {
             const promise = await cardano.enable();
             const length = paymentAddr.length;
             const networkId = await cardano.getNetworkId();
-            if (networkId != 0) {
-                $("#connectBtn").text('Mainnet');
+            if (networkId != 1) {
+                $("#connectBtn").text('Testnet');
                 $("#connectBtn").attr('class', 'btn btn-danger');
             } else {
                 $("#connectBtn").text(`${paymentAddr.substring(0, 6)}...${paymentAddr.substring(length-10,length)}`);

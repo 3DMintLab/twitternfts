@@ -43,20 +43,13 @@ export const callback = (request, response) => {
         oauth_token: oauthToken
 ***REMOVED***
     .then(res => {
-        console.log({
-            accTkn: res.oauth_token,
-            accTknSecret: res.oauth_token_secret,
-            userId: res.user_id,
-            screenName: res.screen_name
-        ***REMOVED***;
-            response.status(200).json(
-                {
+        const callbackresponse = {
                     accTkn: res.oauth_token,
                     accTknSecret: res.oauth_token_secret,
                     userId: res.user_id,
                     screenName: res.screen_name
-                }
-             );
+        }            
+        response.redirect('/callback.html?accTkn='+callbackresponse.accTkn+'&accTknSecret='+callbackresponse.accTknSecret+'&userId='+callbackresponse.userId+'&screenName='+callbackresponse.screenName);
     }
        
   )

@@ -9,9 +9,9 @@ Test of concept integration of Cardano wallet and a website. Based on NodeJs and
 # Description 💡
 The frontend is built using webpack, cardano serialisation library and integrates with Nami Wallet using the exposed api with the browser extension. Check Nami github for reference or the discord channel.
 
-The NodeJS backend calls Cardano-wallet, can be responsible for a simple authentication mechanism validating some users we allow and redirecting responses.
+The NodeJS backend calls twitter and blockfrost using Axios, can be responsible for a simple authentication mechanism validating some users we allow and redirecting responses.
 
-For complete and updated documentation please check our [Github Pages](https://cheffnft.github.io/cardano-vegstore/)
+No user information is stored in any database whatsoever, all privacy information is only stored in local machine and lost after browser is closed.
 
 # Configuration ⌛️
 First, you will need:

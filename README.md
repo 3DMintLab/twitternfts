@@ -1,7 +1,7 @@
-![](https://img.shields.io/badge/Angular-11-informational?style=flat&logo=Angular&logoColor=white&color=fc3903)
-![](https://img.shields.io/badge/Bootstrap-5-informational?style=flat&color=03cafc)
+![](https://img.shields.io/badge/Webpack-5-informational?style=flat&logo=Angular&logoColor=white&color=fc3903)
+![](https://img.shields.io/badge/Bootstrap-3.4.1-informational?style=flat&color=03cafc)
 ![](https://img.shields.io/badge/NodeJS-14-informational?style=flat&color=03fc1c)
-![](https://img.shields.io/badge/CardanoWallet-v20210611-informational?style=flat&color=fc03f4)
+![](https://img.shields.io/badge/CardanoSerializationLib-7.1.0-informational?style=flat&color=fc03f4)
 
 # Cheff Tweets NFT minter 🌽
 Test of concept integration of Cardano wallet and a website. Based on NodeJs and Webpack 5. There are several things to consider in this project, so consider this as a reference, but a useful project for community. 

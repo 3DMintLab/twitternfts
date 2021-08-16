@@ -37,9 +37,9 @@ async function getComponent() {
             if (!$("#connectBtn")) {
                 return;
             }
+            const promise = await cardano.enable();
             const addr = await cardano.getChangeAddress();
             const paymentAddr = S.Address.from_bytes(_Buffer.from(addr, 'hex')).to_bech32();
-            const promise = await cardano.enable();
             const length = paymentAddr.length;
             const networkId = await cardano.getNetworkId();
             if (networkId != 1) {

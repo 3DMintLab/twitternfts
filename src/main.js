@@ -12,13 +12,38 @@ const curent = window.location.pathname;
 logMessage(window.location.pathname);
 
 async function getComponent() {
+    const S = await import('@emurgo/cardano-serialization-lib-browser/cardano_serialization_lib.js');
+    const _Buffer = (await import('buffer/')).Buffer;
+    async function activateCardano() {
+        if (!$("#connectBtn")) {
+            return;
+        }
+        const promise = await cardano.enable();
+        const addr = await cardano.getChangeAddress();
+        const paymentAddr = S.Address.from_bytes(_Buffer.from(addr, 'hex')).to_bech32();
+        const length = paymentAddr.length;
+        const networkId = await cardano.getNetworkId();
+        if (networkId != 1) {
+            $("#connectBtn").text('Testnet');
+            $("#connectBtn").attr('class', 'btn btn-danger');
+        } else {
+            $("#connectBtn").text(`${paymentAddr.substring(0, 6)}...${paymentAddr.substring(length-10,length)}`);
+            $("#connectBtn").attr('class', 'btn btn-success');
+        }
+    }
+    if (typeof cardano != "undefined") {
+        activateCardano();
+    } else {
+        alert('Nami wallet not installed or browser is incompatible.')
+        $("#connectBtn").text('Not Connected');
+        $("#connectBtn").attr('class', 'btn btn-danger');
+    }
+
     if (curent === "/" || curent === "/index.html") {
         var apiurl = process.env.NODE_ENV === 'development' ? process.env.API : location.origin;
         const { upload, post_regex } = await import('./js/mint/app.mjs');
         const { MintTx } = await import('./js/mint/mint.mjs');
         const { getSpinner } = await import('./js/spinner.mjs');
-        const S = await import('@emurgo/cardano-serialization-lib-browser/cardano_serialization_lib.js');
-        const _Buffer = (await import('buffer/')).Buffer;
         var HOST = location.origin;
         
         let accTknSecret = sessionStorage.getItem('accTknSecret');
@@ -33,32 +58,6 @@ async function getComponent() {
             window.location.href = '/token'
             console.log('redirect')
     ***REMOVED***
-        async function activateCardano() {
-            if (!$("#connectBtn")) {
-                return;
-            }
-            const promise = await cardano.enable();
-            const addr = await cardano.getChangeAddress();
-            const paymentAddr = S.Address.from_bytes(_Buffer.from(addr, 'hex')).to_bech32();
-            const length = paymentAddr.length;
-            const networkId = await cardano.getNetworkId();
-            if (networkId != 1) {
-                $("#connectBtn").text('Testnet');
-                $("#connectBtn").attr('class', 'btn btn-danger');
-            } else {
-                $("#connectBtn").text(`${paymentAddr.substring(0, 6)}...${paymentAddr.substring(length-10,length)}`);
-                $("#connectBtn").attr('class', 'btn btn-success');
-            }
-        }
-        activateCardano();
-        if (typeof cardano != "undefined") {
-            activateCardano();
-        } else {
-            alert('Nami wallet not installed or browser is incompatible.')
-            $("#connectBtn").text('Not Connected');
-            $("#connectBtn").attr('class', 'btn btn-danger');
-        }
-        
         $("#mintbtn").on('click', async () => {
             var target = document.getElementById('body');
             var spinner = getSpinner(target);
@@ -97,6 +96,9 @@ async function getComponent() {
     }
     if (curent === "/callback.html") {
         const { default: app } = await import('./js/auth/callback.mjs');
+    }
+    if (curent === "/delegate.html") {
+        const { default: app } = await import('./js/delegate.mjs');
     }
     const element = document.createElement('script');
     return element;

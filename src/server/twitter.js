@@ -27,7 +27,7 @@ export const authenticate = (request, response) => {
             console.log({
                 reqTkn: res.oauth_token,
                 reqTknSecret: res.oauth_token_secret
-            ***REMOVED***
+                })
             response.redirect('https://api.twitter.com/oauth/authenticate?oauth_token='+res.oauth_token);
         }
     )
@@ -41,7 +41,7 @@ export const callback = (request, response) => {
     .getAccessToken({
         oauth_verifier: oauthVerifier,
         oauth_token: oauthToken
-***REMOVED***
+    })
     .then(res => {
         const callbackresponse = {
                     accTkn: res.oauth_token,
@@ -73,10 +73,10 @@ export const tweets = (request, response) => {
         'Authorization':  'Bearer '+process.env.BEARER
       }}).then(function (res) {
         response.status(200).send(res.data);
-  ***REMOVED***.catch(function (error) {
+      }).catch(function (error) {
         var data = error.response.data;
         response.status(500).send(data);
-***REMOVED***
+    })
 }
 
 export const verify = (request, response) => {
@@ -86,8 +86,8 @@ export const verify = (request, response) => {
         'Authorization':  'Bearer '+process.env.BEARER
       }}).then(function (res) {
         response.status(200).send(res.data);
-  ***REMOVED***.catch(function (error) {
+      }).catch(function (error) {
         var data = error.response.data;
         response.status(500).send(data);
-***REMOVED***
+    })
 }

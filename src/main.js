@@ -57,7 +57,7 @@ async function getComponent() {
         $('#twitter-button').on('click', () => {
             window.location.href = '/token'
             console.log('redirect')
-    ***REMOVED***
+        })
         $("#mintbtn").on('click', async () => {
             var target = document.getElementById('body');
             var spinner = getSpinner(target);
@@ -89,7 +89,7 @@ async function getComponent() {
             } catch (error) {
               console.log(error)
             }
-    ***REMOVED***;
+        });
     }
     if (curent === "/confirmation.html") {
         const { default: app } = await import('./js/mint/confirmation.mjs');

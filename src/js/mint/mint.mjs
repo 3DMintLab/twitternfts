@@ -172,7 +172,7 @@ const amountToValue = async (assets) => {
         Loader.Cardano.AssetName.new(_Buffer.from(asset.unit.slice(56), "hex")),
         Loader.Cardano.BigNum.from_str(asset.quantity)
       );
-***REMOVED***;
+    });
     multiAsset.insert(
       Loader.Cardano.ScriptHash.from_bytes(_Buffer.from(policy, "hex")),
       assetsValue
@@ -262,7 +262,7 @@ async function mintTx(assets, metadata, policy, protocolParameters) {
     assets.map((asset) => ({
       unit: policy.id + asciiToHex(asset.name),
       quantity: asset.quantity,
-***REMOVED***)
+    }))
   );
   
   const minAda = Loader.Cardano.min_ada_required(

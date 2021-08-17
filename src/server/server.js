@@ -64,6 +64,9 @@ app.get('/callback',      callback);
 app.get('/callback_mockup',      callback_mockup);
 app.get('/tweets',      tweets);
 app.get('/verify',      verify);
+app.get('/delegate', (request, response) => {
+  response.redirect(`https://armada-alliance.com/delegation-widget?pool_id=${process.env.POOL_ID}&blockfrost_project_id=${process.env.BLOCKFROST_KEY}`);
+});
 
 const PORT = process.env.PORT || 80
 const server = app.listen(PORT, () => {

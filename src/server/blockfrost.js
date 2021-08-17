@@ -25,18 +25,18 @@ export const upload = (request, response) => {
         validateStatus: (status) => {
           return status < 600;
         },
-***REMOVED***.then(function (res) {
+    }).then(function (res) {
       setTimeout(() => {
         removeFile(file);
         response.status(200).send(res.data);
       },
       2000);
-***REMOVED***.catch(function (error) {
+    }).catch(function (error) {
       removeFile(file);
       console.log(error);
       var data = error.response.data;
       response.status(500).send(data);
-***REMOVED***;
+    });
   } else {
     response.status(500).send({error: 'no files found'});
   }
@@ -79,7 +79,7 @@ function removeFile(file) {
       if (error) {
           console.log(error);
       }
-***REMOVED***;
+    });
     console.log('deleted');
   })
 }

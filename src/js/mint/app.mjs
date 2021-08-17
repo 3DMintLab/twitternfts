@@ -46,7 +46,7 @@ export async function upload() {
         let response = await fetch(url, {
             method: 'POST',
             body: data
-    ***REMOVED***;
+        });
         // server responded with http response != 200
         if(response.status != 200) {
             console.log(response)
@@ -105,14 +105,14 @@ export async function upload() {
         } else {
             $('#mintbtn').prop('disabled', true);
         }
-***REMOVED***;
+    });
 
     async function generatePicture() {
         html2canvas(document.getElementById('preview'), {
             useCORS: true,
             allowTaint: true,
             letterRendering: 1,
-    ***REMOVED***.then(
+        }).then(
             function (canvas) {
                 document.getElementById("previewImage").appendChild(canvas);
                 getCanvas = canvas;
@@ -123,27 +123,27 @@ export async function upload() {
     }
 
     async function loadTwit(url) {
-***REMOVED***
+        var HOST = process.env.NODE_ENV === 'development' ? process.env.API : location.origin;
         const payload = await fetch(HOST+'/oembed?url='+url, {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
             method: 'GET'
-    ***REMOVED***.then((response) => response.json());
+        }).then((response) => response.json());
         document.getElementById('twitter_container').innerHTML = payload.html;
         generatePicture();
     }
 
     async function verify(code) {
-***REMOVED***
+        var HOST = process.env.NODE_ENV === 'development' ? process.env.API : location.origin;
         const payload = await fetch(HOST+'/verify?tweetid='+code, {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
             method: 'GET'
-    ***REMOVED***.then((response) => response.json());
+        }).then((response) => response.json());
         return payload;
     }
 
@@ -152,5 +152,5 @@ export async function upload() {
         // Now browser starts downloading it instead of just showing it
         var newData = imgageData.replace(/^data:image\/png/, "data:application/octet-stream");
         $("#btn-Convert-Html2Image").attr("download", "poem.png").attr("href", newData);
-***REMOVED***;
-***REMOVED***
+    });
+})();

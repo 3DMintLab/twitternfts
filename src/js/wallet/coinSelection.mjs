@@ -275,7 +275,7 @@ const CoinSelection = {
           throw e;
         }
       }
-***REMOVED***;
+    });
 
     // Phase 2: Improve
     splitOutputsAmounts = sortAmountList(splitOutputsAmounts);
@@ -301,7 +301,7 @@ const CoinSelection = {
         limit - utxoSelection.selection.length,
         range
       );
-***REMOVED***;
+    });
 
     return {
       input: utxoSelection.selection,
@@ -605,7 +605,7 @@ function createSubSet(utxoSelection, output) {
           utxoSelection.remaining.splice(index, 1).pop()
         );
       }
-***REMOVED***;
+    });
   } else {
     utxoSelection.subset = utxoSelection.remaining.splice(
       0,

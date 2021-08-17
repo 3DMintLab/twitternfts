@@ -1,4 +1,4 @@
-***REMOVED***
+(function() {
     const urlParams = new URLSearchParams(window.location.search);
     const accTkn = urlParams.get('accTkn');
     const accTknSecret = urlParams.get('accTknSecret');
@@ -14,4 +14,4 @@
         alert('Error in authenticating this user, try again later!');
         setTimeout(function(){ window.location.href = "/index.html"; }, 1000);
     }
-***REMOVED***
+})();

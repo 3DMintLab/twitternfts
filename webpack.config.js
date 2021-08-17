@@ -91,9 +91,9 @@ export default {
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: "jquery"
-***REMOVED***,
+    }),
     new webpack.EnvironmentPlugin({
       API: 'http://localhost:80',    
-***REMOVED***
+    })
   ])
 }

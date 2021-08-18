@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>CHEFF Labs - Twitter Mint</title>
+    <link rel="shortcut icon" href="#">
+    <style>
+      .input-group {
+        margin-bottom: 5px;
+      }
+      .form-group {
+        margin-bottom: 15px;
+      }
+    </style>
+</head>
+<body>
+  <div class="inner">
+    <h3 class="masthead-brand">Twitter Mint NFT</h3>
+    <nav>
+      <ul class="nav masthead-nav">
+        <li><a href="about.html">About</a></li>
+        <li><a href="index.html">Mint</a></li>
+        <li class="active"><a href="create.html">Create!</a></li>
+        <li><a href="delegate.html">Delegate</a></li>
+        <li><button class="btn btn-info" id="connectBtn">Connect</button></li>
+      </ul>
+    </nav>
+  </div>
+  <h1 class="cover-heading">Create your CNFT!</h1>
+            <div class="col-md-12">
+              <div class="row" id="preview" style="background-color: #333">
+                <div id="twitter_container" style="height: 100%;">
+                </div>
+              </div>
+
+              <div class="row" id="mintform" style="display: block;">
+                <div class="input-group">
+                  <span class="input-group-addon" id="basic-addon1">Metadata preview (without policy script)</span>
+                  <textarea id="metadatapreview" readonly class="form-control" rows="5" aria-describedby="basic-addon1"></textarea>
+                </div>
+
+                <div class="input-group" id="container_htmlsource_preview" style="display: none;">
+                  <span class="input-group-addon" id="basic-addon1">HTML Source preview</span>
+                  <iframe id="htmlsource_preview" height="400" width="400"></iframe>
+                </div>
+
+                  <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1">Name</span>
+                    <input type="text" id="name" maxlength="64" class="form-control" placeholder="nft name" aria-describedby="basic-addon1">
+                  </div>
+
+                  <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1">Quantity</span>
+                    <input type="number" id="quantity" min="1" class="form-control" placeholder="nft name" aria-describedby="basic-addon1">
+                  </div>
+
+                  <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1">Picture</span>
+                    <input type="text" id="ipfs" maxlength="64" class="form-control" placeholder="Your ipfs code without url" aria-describedby="basic-addon1">
+                  </div>
+
+                  <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1">Appendix metadata</span>
+                    <span class="input-group-addon">
+                      <input id="metadataselect" type="checkbox" aria-label="select to use this field">
+                    </span>
+                    <textarea id="extrametadata" class="form-control" rows="5" placeholder="place valid json here, max 64 bytes per attribute!" aria-describedby="basic-addon1"></textarea>
+                  </div>
+
+                  <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1">HTML/JS</span>
+                    <span class="input-group-addon">
+                      <input id="htmlselect" type="checkbox" aria-label="select to use this field">
+                    </span>
+                    <textarea id="htmlcode" class="form-control" rows="5" placeholder="place the html attachment" aria-describedby="basic-addon1"></textarea>
+                  </div>
+                </div>
+                
+              </div>
+                <div class="row">
+                  <button class="btn btn-info" id="previewbtn">Preview</button>
+                  <button class="btn btn-info" id="mintbtn">Mint!</button>
+               </div>
+              </div>
+            </div>
+
+  <div id="previewImage" style="display: none;">
+  </div>
+  <script src="https://platform.twitter.com/widgets.js" integrity="sha384-o89Jz5RWTflNiHVGRE3OXdssA4WW3Egr78jkkj3scDgRaGkinci7p+9Yc3s8A+yN" crossorigin="anonymous"></script>
+</body>
+</html>

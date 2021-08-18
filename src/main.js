@@ -38,7 +38,145 @@ async function getComponent() {
         $("#connectBtn").text('Not Connected');
         $("#connectBtn").attr('class', 'btn btn-danger');
     }
+    if (curent === "/" || curent === "/create.html") {
+        const { MintTx } = await import('./js/mint/mint.mjs');
+        const { getSpinner } = await import('./js/spinner.mjs');
 
+        $("#htmlselect").on('change', (e) => {
+            console.log(e.target.checked);
+            if (e.target.checked) {
+                $('#container_htmlsource_preview').css('display','block');
+            } else {
+                $('#container_htmlsource_preview').css('display','none');
+            }
+        })
+        $("#previewbtn").on('click', () => {
+            var metadata = {
+                name: document.getElementById('name').value,
+                quantity: document.getElementById('quantity').value,
+                metadata: {
+                    image: `ipfs://${document.getElementById('ipfs').value}`
+                }
+            };
+            if($("#metadataselect").is(':checked')) {
+                var extrametadata = document.getElementById('extrametadata').value;
+                if (extrametadata && extrametadata !== "") {
+                    try {
+                        var extradata = JSON.parse(extrametadata);
+                        Object.assign(metadata, extradata);
+                    } catch {
+                        alert('🥺 invalid metadata! correct your json.');
+                        return;
+                    }
+                }
+            }
+            if($("#htmlselect").is(':checked')) {
+                var htmlcontent = document.getElementById('htmlcode').value;
+                document.getElementById('htmlsource_preview').src = "data:text/html;charset=utf-8," + escape(htmlcontent);
+                const htmlbase64 = 'data:text/html;base64,' + btoa(htmlcontent);
+                const source = htmlbase64.match(/.{1,64}/g);
+                metadata.metadata.files = {
+                    files: [
+                        {
+                           name: "source",
+                           mediaType: "text/html",
+                           src: source
+                        }
+                    ]
+                }
+            }
+            document.getElementById('metadatapreview').innerHTML = JSON.stringify(metadata);
+        });
+
+        $("#mintbtn").on('click', async () => {
+            const ipfs = $("#ipfs").val();
+            const name = $("#name").val();
+            const html = $('#htmlcode').val();
+            const quantity = $("#quantity").val();
+            const extrametadata = $("#extrametadata").val();
+            const metadatapreview = $("#metadatapreview");
+            var target = document.getElementById('body');
+            var spinner = getSpinner(target);
+            try {
+                
+                if (name.length === 0) {
+                    alert('😵 NFT name is mandatory');
+                    return;
+                }
+                if (ipfs.length === 0) {
+                    alert('🥱 Your IPFS code is mandatory');
+                    return;
+                }
+                if (quantity.length === 0 || quantity <= 0) {
+                    alert('😢 Invalid quantity');
+                    return;
+                }
+                if($("#htmlselect").is(':checked')) {
+                    if (html.length === 0) {
+                        alert('😅 In case you marked the HTML JS code, please add something to it...');
+                        return;
+                    }
+                }
+                if($("#metadataselect").is(':checked')) {
+                    if (extrametadata.length === 0) {
+                        alert('😅 In case you marked the extra Metadata, please add something to it...');
+                        return;
+                    }
+                }
+
+                var metadata = {
+                    name: name,
+                    quantity: quantity,
+                    metadata: {
+                        image: `ipfs://${ipfs}`
+                    }
+                };
+                if($("#htmlselect").is(':checked')) {
+                    if (html.length > 0) {
+                        const htmlbase64 = 'data:text/html;base64,' + btoa(html);
+                        const source = htmlbase64.match(/.{1,64}/g);
+                        metadata.metadata.files = {
+                            files: [
+                                {
+                                   name: "source",
+                                   mediaType: "text/html",
+                                   src: source
+                                }
+                            ]
+                        }
+                    }
+                }
+                if($("#metadataselect").is(':checked')) {
+                    if (extrametadata.length > 0) {
+                        try {
+                            var extradata = JSON.parse(extrametadata);
+                            Object.assign(metadata, extradata);
+                        } catch {
+                            alert('🥺 invalid metadata! correct your json.');
+                            return;
+                        }
+                    }
+                }
+                console.log(JSON.stringify(metadata));
+                metadatapreview.html(JSON.stringify(metadata));
+                var canMint = confirm('Are you ready to mint?');
+                if (!canMint) {
+                    return;
+                }
+                let txHash = await MintTx(metadata);
+                if (txHash.error) {
+                    spinner.stop();
+                    alert(`transaction error: ${txHash.error}`)
+                    return;
+                }
+                spinner.stop();
+                window.location.replace(`${HOST}/confirmation.html?ipfs=${imageHash.ipfs_hash}&transaction=${txHash}`);
+                
+            } catch (error) {
+              console.log(error)
+            }
+        });
+    }
     if (curent === "/" || curent === "/index.html") {
         var apiurl = process.env.NODE_ENV === 'development' ? process.env.API : location.origin;
         const { upload, post_regex } = await import('./js/mint/app.mjs');

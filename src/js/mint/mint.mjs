@@ -43,7 +43,6 @@ export async function getProtocolParameters() {
 };
 
 async function createLockingPolicyScript(protocolParameters) {
-    //const protocolParameters = protocolParameters
     const slot = parseInt(protocolParameters.slot);
     const ttl = slot + 1000;
     const address = _Buffer.from(
@@ -222,7 +221,6 @@ const asciiToHex = (str) => {
  */
 export async function MintTx(metadata) {
   const protocolParameters = await getProtocolParameters();
-  console.log(protocolParameters);
   const policy = await createLockingPolicyScript(protocolParameters)
 
   let name = metadata.name.slice(0,32)

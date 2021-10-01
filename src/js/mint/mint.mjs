@@ -43,7 +43,6 @@ export async function getProtocolParameters() {
 };
 
 async function createLockingPolicyScript(protocolParameters) {
-    //const protocolParameters = protocolParameters
     const slot = parseInt(protocolParameters.slot);
     const ttl = slot + 1000;
     const address = _Buffer.from(
@@ -222,7 +221,6 @@ const asciiToHex = (str) => {
  */
 export async function MintTx(metadata) {
   const protocolParameters = await getProtocolParameters();
-  console.log(protocolParameters);
   const policy = await createLockingPolicyScript(protocolParameters)
 
   let name = metadata.name.slice(0,32)
@@ -269,7 +267,7 @@ async function mintTx(assets, metadata, policy, protocolParameters) {
     checkValue,
     protocolParameters.minUtxo
   );
-  let value = Loader.Cardano.Value.new(Loader.Cardano.BigNum.from_str("0"));
+  let value = Loader.Cardano.Value.new(Loader.Cardano.BigNum.from_str("2000000"));
   const _outputs = Loader.Cardano.TransactionOutputs.new();
   _outputs.add(
     Loader.Cardano.TransactionOutput.new(
@@ -393,7 +391,7 @@ async function mintTx(assets, metadata, policy, protocolParameters) {
 
   let minFee = Loader.Cardano.min_fee(rawTx, protocolParameters.linearFee);
 
-  value = value.checked_sub(Loader.Cardano.Value.new(minFee));
+  // value = value.checked_sub(Loader.Cardano.Value.new(minFee));
 
   const outputs = Loader.Cardano.TransactionOutputs.new();
   outputs.add(

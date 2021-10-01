@@ -35,3 +35,6 @@ API_KEY=twitter developer api key
 API_SECRET=twitter developer api secret
 
 For start the backend in development, run _npm start_
+
+# Update the widget.js from Twitter
+Sometimes Twitter will update their API, we only have to do is going to https://www.srihash.org/ paste the url to twitter api https://platform.twitter.com/widgets.js and update the index.html!

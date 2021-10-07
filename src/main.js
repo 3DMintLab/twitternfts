@@ -170,7 +170,7 @@ async function getComponent() {
                     return;
                 }
                 spinner.stop();
-                window.location.replace(`${HOST}/confirmation.html?ipfs=${imageHash.ipfs_hash}&transaction=${txHash}`);
+                window.location.replace(`${HOST}/confirmation.html?ipfs=${ipfs}&transaction=${txHash}`);
                 
             } catch (error) {
               console.log(error)

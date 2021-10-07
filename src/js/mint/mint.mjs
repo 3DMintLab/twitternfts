@@ -267,7 +267,7 @@ async function mintTx(assets, metadata, policy, protocolParameters) {
     checkValue,
     protocolParameters.minUtxo
   );
-  let value = Loader.Cardano.Value.new(Loader.Cardano.BigNum.from_str("2000000"));
+  let value = Loader.Cardano.Value.new(Loader.Cardano.BigNum.from_str("0"));
   const _outputs = Loader.Cardano.TransactionOutputs.new();
   _outputs.add(
     Loader.Cardano.TransactionOutput.new(
@@ -391,7 +391,7 @@ async function mintTx(assets, metadata, policy, protocolParameters) {
 
   let minFee = Loader.Cardano.min_fee(rawTx, protocolParameters.linearFee);
 
-  // value = value.checked_sub(Loader.Cardano.Value.new(minFee));
+  value = value.checked_sub(Loader.Cardano.Value.new(minFee));
 
   const outputs = Loader.Cardano.TransactionOutputs.new();
   outputs.add(
